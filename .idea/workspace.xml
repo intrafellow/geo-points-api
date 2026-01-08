@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="37d0c796-b5e9-4321-851a-cf99c9d0ee6c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/geo-points-api.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/models/message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/models/point.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/messages_repo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/points_repo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/messages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/search.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/routers/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/messages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/search.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/services/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/services/admin_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/services/messages_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/services/points_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/services/search_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/tests/conftest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_messages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_points.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_search.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="37FDiBgfHMfl6tl1qK4Pfk2En6w" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-5b207ade9991-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17890.14" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="37d0c796-b5e9-4321-851a-cf99c9d0ee6c" name="Changes" comment="" />
+      <created>1766490050092</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766490050092</updated>
+    </task>
+    <servers />
+  </component>
+</project>
