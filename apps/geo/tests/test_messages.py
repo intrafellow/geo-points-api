@@ -1,6 +1,7 @@
 from django.contrib.gis.geos import Point as GeoPoint
 
-from apps.geo.models import Message, Point
+from apps.geo.models.message import Message
+from apps.geo.models.point import Point
 
 
 def _create_point(*, title: str, latitude: float, longitude: float) -> Point:
@@ -8,7 +9,7 @@ def _create_point(*, title: str, latitude: float, longitude: float) -> Point:
     return Point.objects.create(title=title, location=location)
 
 
-def test_create_message_401(api_client, db):
+def test_create_message_requires_authentication(api_client, db):
     point = _create_point(title="A", latitude=55.0, longitude=37.0)
     resp = api_client.post(
         "/api/points/messages/",
@@ -18,7 +19,7 @@ def test_create_message_401(api_client, db):
     assert resp.status_code == 401
 
 
-def test_create_message_404_point_not_found(auth_client):
+def test_create_message_returns_404_for_missing_point(auth_client):
     resp = auth_client.post(
         "/api/points/messages/",
         data={"point_id": 999999, "text": "hello"},
@@ -27,7 +28,7 @@ def test_create_message_404_point_not_found(auth_client):
     assert resp.status_code == 404
 
 
-def test_create_message_success(auth_client, user, db):
+def test_create_message_creates_message(auth_client, user, db):
     point = _create_point(title="A", latitude=55.0, longitude=37.0)
     resp = auth_client.post(
         "/api/points/messages/",

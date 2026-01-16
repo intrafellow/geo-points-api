@@ -1,6 +1,7 @@
 from django.contrib.gis.geos import Point as GeoPoint
 
-from apps.geo.models import Message, Point
+from apps.geo.models.message import Message
+from apps.geo.models.point import Point
 
 
 def _create_point(*, title: str, latitude: float, longitude: float) -> Point:
@@ -8,12 +9,14 @@ def _create_point(*, title: str, latitude: float, longitude: float) -> Point:
     return Point.objects.create(title=title, location=location)
 
 
-def test_search_points_401(api_client):
+def test_search_points_requires_authentication(api_client):
+    # Act
     resp = api_client.get("/api/points/search/?latitude=55&longitude=37&radius=1")
+    # Assert
     assert resp.status_code == 401
 
 
-def test_search_points_radius_is_km(auth_client, db):
+def test_search_points_uses_radius_in_kilometers(auth_client, db):
     # 0.01 градуса широты ~ 1.11 км
     center = _create_point(title="center", latitude=55.751244, longitude=37.618423)
     near_1_1km = _create_point(title="near", latitude=55.761244, longitude=37.618423)
@@ -38,7 +41,7 @@ def test_search_points_radius_is_km(auth_client, db):
     assert far_3_3km.id not in ids_2km
 
 
-def test_search_messages_in_radius(auth_client, user, db):
+def test_search_messages_returns_messages_linked_to_points_in_radius(auth_client, user, db):
     center = _create_point(title="center", latitude=55.751244, longitude=37.618423)
     near = _create_point(title="near", latitude=55.761244, longitude=37.618423)
 

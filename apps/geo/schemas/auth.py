@@ -2,7 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 
-class TestUserCreateSerializer(serializers.Serializer):
+class RegisterRequestSerializer(serializers.Serializer):
     username = serializers.CharField(min_length=1, max_length=150)
     password = serializers.CharField(
         min_length=8,
@@ -12,6 +12,6 @@ class TestUserCreateSerializer(serializers.Serializer):
     )
 
 
-class TestUserResponseSerializer(serializers.Serializer):
+class RegisterResponseSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     username = serializers.CharField()

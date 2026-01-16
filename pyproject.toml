@@ -18,10 +18,3 @@ known-first-party = ["apps", "config"]
 DJANGO_SETTINGS_MODULE = "config.settings"
 python_files = ["test_*.py"]
 addopts = "-q"
-
-
-
-
-
-
-

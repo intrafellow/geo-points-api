@@ -5,7 +5,8 @@ from django.contrib.gis.geos import Point as GeoPoint
 from django.contrib.gis.measure import D
 from django.db.models import QuerySet
 
-from apps.geo.models import Message, Point
+from apps.geo.models.message import Message
+from apps.geo.models.point import Point
 
 User = get_user_model()
 
@@ -23,6 +24,3 @@ class MessagesRepository:
             .filter(point__location__dwithin=(center, D(km=radius_km)))
             .order_by("id")
         )
-
-
-

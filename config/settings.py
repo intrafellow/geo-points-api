@@ -7,7 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "unsafe-dev-secret")
 if not DEBUG and SECRET_KEY == "unsafe-dev-secret":
-    raise RuntimeError("Set DJANGO_SECRET_KEY (unsafe-dev-secret is not allowed when DJANGO_DEBUG=0)")
+    raise RuntimeError(
+        "Set DJANGO_SECRET_KEY (unsafe-dev-secret is not allowed when DJANGO_DEBUG=0)"
+    )
 
 ALLOWED_HOSTS = [
     h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost").split(",") if h.strip()
@@ -80,8 +82,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "ru-ru"
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = os.getenv("DJANGO_LANGUAGE_CODE", "ru-ru")
+TIME_ZONE = os.getenv("DJANGO_TIME_ZONE", "UTC")
 USE_I18N = True
 USE_TZ = True
 
@@ -99,6 +101,10 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
 }
+
+# Включает служебный эндпоинт создания тестового пользователя (только для IsAdminUser).
+# В проде рекомендуется отключать: ENABLE_TEST_USER_ENDPOINT=0.
+ENABLE_TEST_USER_ENDPOINT = os.getenv("ENABLE_TEST_USER_ENDPOINT", "1" if DEBUG else "0") == "1"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -121,6 +127,44 @@ REST_FRAMEWORK = {
 # Опциональный лимит радиуса поиска (км). Если переменная окружения не задана — лимит не применяется.
 _max_radius_raw = os.getenv("MAX_SEARCH_RADIUS_KM")
 MAX_SEARCH_RADIUS_KM = float(_max_radius_raw) if _max_radius_raw else None
+
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+DJANGO_LOG_LEVEL = os.getenv("DJANGO_LOG_LEVEL", "INFO").upper()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s %(levelname)s %(name)s %(message)s",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+            "level": LOG_LEVEL,
+        }
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        # Ошибки запросов (4xx/5xx) и трейсбеки от Django.
+        "django.request": {
+            "handlers": ["console"],
+            "level": DJANGO_LOG_LEVEL,
+            "propagate": False,
+        },
+        # Наш доменный код.
+        "apps.geo": {
+            "handlers": ["console"],
+            "level": LOG_LEVEL,
+            "propagate": False,
+        },
+    },
+}
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "geo-points-api",

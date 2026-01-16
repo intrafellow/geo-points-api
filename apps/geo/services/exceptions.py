@@ -15,9 +15,3 @@ class UsernameAlreadyExistsError(GeoServiceError):
     def __init__(self, *, username: str) -> None:
         super().__init__(f"Username already exists: {username}")
         self.username = username
-
-
-
-
-
-

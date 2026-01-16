@@ -10,18 +10,13 @@ User = get_user_model()
 logger = logging.getLogger("apps.geo")
 
 
-class AdminService:
-    def create_test_user(self, *, username: str, password: str) -> User:
+class AuthService:
+    def register_user(self, *, username: str, password: str) -> User:
         normalized_username = self._normalize_username(username)
         if User.objects.filter(username=normalized_username).exists():
             raise UsernameAlreadyExistsError(username=normalized_username)
-
         created_user = User.objects.create_user(username=normalized_username, password=password)
-        logger.info(
-            "test_user_created id=%s username=%s",
-            created_user.id,
-            created_user.username,
-        )
+        logger.info("user_registered id=%s username=%s", created_user.id, created_user.username)
         return created_user
 
     @staticmethod

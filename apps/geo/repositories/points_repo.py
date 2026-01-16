@@ -4,7 +4,7 @@ from django.contrib.gis.geos import Point as GeoPoint
 from django.contrib.gis.measure import D
 from django.db.models import QuerySet
 
-from apps.geo.models import Point
+from apps.geo.models.point import Point
 
 
 class PointsRepository:
@@ -20,6 +20,3 @@ class PointsRepository:
     ) -> QuerySet[Point]:
         center = GeoPoint(longitude, latitude, srid=4326)
         return Point.objects.filter(location__dwithin=(center, D(km=radius_km))).order_by("id")
-
-
-

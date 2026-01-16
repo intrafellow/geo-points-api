@@ -1,11 +1,4 @@
-from .message import Message
-from .point import Point
+from .message import Message as Message
+from .point import Point as Point
 
-__all__ = ["Point", "Message"]
-
-
-
-
-
-
-
+__all__ = ["Message", "Point"]

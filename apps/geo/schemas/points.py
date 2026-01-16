@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.geo.models import Point
+from apps.geo.models.point import Point
 
 
 class PointCreateSerializer(serializers.Serializer):

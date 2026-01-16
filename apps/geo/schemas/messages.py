@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.geo.models import Message
+from apps.geo.models.message import Message
 
 
 class MessageCreateSerializer(serializers.Serializer):

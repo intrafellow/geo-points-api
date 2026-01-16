@@ -15,10 +15,3 @@ class Message(models.Model):
     class Meta:
         db_table = "geo_messages"
         indexes = [models.Index(fields=["point", "created_at"])]
-
-
-
-
-
-
-

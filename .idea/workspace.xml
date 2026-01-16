@@ -5,59 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37d0c796-b5e9-4321-851a-cf99c9d0ee6c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/geo-points-api.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/models/message.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/models/point.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/messages_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/repositories/points_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/messages.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/routers/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/messages.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/schemas/search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/services/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/services/admin_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/services/messages_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/services/points_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/services/search_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/tests/conftest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_messages.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_points.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/geo/tests/test_search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +15,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "intrafellow"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/intrafellow/geo-points-api.git",
+    "accountId": "3041acac-9d5c-4f8a-a638-4e6d628bf4ca"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -75,12 +35,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

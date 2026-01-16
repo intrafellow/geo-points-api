@@ -19,6 +19,10 @@ Backend API на **Django 5 + DRF + GeoDjango/PostGIS** для работы с �
 - **Безопасность**: все доменные эндпоинты требуют `Authorization: Bearer <access>`
 - **Документация**: README + примеры curl + OpenAPI/Swagger
 
+Дополнительно (вне исходного ТЗ, для удобства проверки):
+- **POST `/api/auth/register/`** — регистрация пользователя
+- **POST `/api/admin/test-users/`** — создание тестового пользователя (только admin/staff, можно отключить через env)
+
 ---
 
 ## Требования
@@ -83,6 +87,9 @@ python manage.py runserver
 - **`MAX_SEARCH_RADIUS_KM`**: ограничение радиуса поиска (в км). Если не задано — лимит не применяется.
 - **`JWT_ACCESS_MINUTES`** (по умолчанию 10), **`JWT_REFRESH_DAYS`** (по умолчанию 7)
 - **`THROTTLE_ANON`**, **`THROTTLE_USER`**, **`API_PAGE_SIZE`**
+- **`DJANGO_LANGUAGE_CODE`** (по умолчанию `ru-ru`), **`DJANGO_TIME_ZONE`** (по умолчанию `UTC`)
+- **`ENABLE_TEST_USER_ENDPOINT`**: `1`/`0` — включить/выключить `POST /api/admin/test-users/` (по умолчанию включено в debug)
+- **`LOG_LEVEL`**, **`DJANGO_LOG_LEVEL`**: уровни логирования (по умолчанию `INFO`). Логи пишутся в stdout, удобно смотреть через `docker compose logs -f web`.
 
 ---
 
@@ -123,6 +130,26 @@ curl -X POST "http://localhost:8000/api/auth/token/blacklist/" \
   -H "Content-Type: application/json" \
   -d '{"refresh":"..."}'
 ```
+
+---
+
+## Регистрация (доп. эндпоинт для тестового задания)
+
+**POST `/api/auth/register/`** (без авторизации)
+
+Request:
+
+```json
+{"username":"user1","password":"S0mething-Longer_123"}
+```
+
+Response `201`:
+
+```json
+{"id": 1, "username": "user1"}
+```
+
+Далее получите JWT через `POST /api/auth/token/`.
 
 ---
 
@@ -306,6 +333,14 @@ curl "$BASE_URL/api/points/messages/search/?latitude=55.751244&longitude=37.6184
 docker compose run --rm web pytest -q
 ```
 
+Покрытие (pytest-cov):
+
+```bash
+docker compose run --rm web pytest --cov=apps --cov-report=term -q
+```
+
+Текущее покрытие: **98%** (TOTAL по `--cov=apps`).
+
 ---
 
 ## Технические заметки (GeoDjango/PostGIS)
@@ -320,6 +355,3 @@ docker compose run --rm web pytest -q
 
 - В проде обязательно задайте `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, корректный `DJANGO_ALLOWED_HOSTS`.
 - В API включены throttling и пагинация (см. `config/settings.py`).
-
-
-
