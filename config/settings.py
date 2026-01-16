@@ -103,7 +103,6 @@ SIMPLE_JWT = {
 }
 
 # Включает служебный эндпоинт создания тестового пользователя (только для IsAdminUser).
-# В проде рекомендуется отключать: ENABLE_TEST_USER_ENDPOINT=0.
 ENABLE_TEST_USER_ENDPOINT = os.getenv("ENABLE_TEST_USER_ENDPOINT", "1" if DEBUG else "0") == "1"
 
 REST_FRAMEWORK = {
@@ -151,13 +150,11 @@ LOGGING = {
         "level": LOG_LEVEL,
     },
     "loggers": {
-        # Ошибки запросов (4xx/5xx) и трейсбеки от Django.
         "django.request": {
             "handlers": ["console"],
             "level": DJANGO_LOG_LEVEL,
             "propagate": False,
         },
-        # Наш доменный код.
         "apps.geo": {
             "handlers": ["console"],
             "level": LOG_LEVEL,
