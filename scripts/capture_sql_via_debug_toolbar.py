@@ -66,7 +66,7 @@ def _wait_for_http(conn: http.client.HTTPConnection, path: str, *, timeout_s: fl
             status, _, _ = _http_request(conn, "GET", path, headers={"Connection": "keep-alive"})
             if 200 <= status < 500:
                 return
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             last_err = exc
         time.sleep(0.5)
     raise SystemExit(f"Server is not ready at {path}: {last_err}")

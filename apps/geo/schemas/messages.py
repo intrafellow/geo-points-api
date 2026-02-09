@@ -11,7 +11,6 @@ class MessageCreateSerializer(serializers.Serializer):
         return value.strip()
 
     def create(self, validated_data: dict) -> Message:
-        # `point` и `author` передаются из view через serializer.save(...).
         validated_data.pop("point_id", None)
         return Message.objects.create(**validated_data)
 

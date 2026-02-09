@@ -188,17 +188,11 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-# Для django-debug-toolbar: разрешаем локальные адреса/контейнеры (только DEBUG=1).
 INTERNAL_IPS = [ip.strip() for ip in os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")]
 
 if ENABLE_DEBUG_TOOLBAR:
-    # В Docker REMOTE_ADDR часто не попадает в INTERNAL_IPS. Для dev-аналитики SQL проще
-    # показывать toolbar всегда, но строго в DEBUG.
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: True,
-        # Swagger UI использует fetch; включаем авто-обновление панелей на fetch/XHR запросах.
         "UPDATE_ON_FETCH": True,
-        # Включаем загрузку панелей через Ajax, чтобы работала History и можно было
-        # доставать SQL по store_id через debug-toolbar endpoints.
         "RENDER_PANELS": False,
     }
