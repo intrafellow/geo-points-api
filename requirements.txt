@@ -4,6 +4,7 @@ djangorestframework-simplejwt==5.3.1
 drf-spectacular==0.28.0
 psycopg[binary]==3.2.3
 gunicorn==23.0.0
+django-debug-toolbar==4.4.6
 
 pytest==8.3.4
 pytest-django==4.9.0
