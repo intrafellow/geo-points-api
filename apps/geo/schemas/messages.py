@@ -7,6 +7,17 @@ class MessageCreateSerializer(serializers.Serializer):
     point_id = serializers.IntegerField(min_value=1)
     text = serializers.CharField(allow_blank=False)
 
+    def validate_text(self, value: str) -> str:
+        return value.strip()
+
+    def create(self, validated_data: dict) -> Message:
+        # `point` и `author` передаются из view через serializer.save(...).
+        validated_data.pop("point_id", None)
+        return Message.objects.create(**validated_data)
+
+    def to_representation(self, instance: Message) -> dict:
+        return MessageResponseSerializer(instance).data
+
 
 class MessageResponseSerializer(serializers.ModelSerializer):
     point_id = serializers.IntegerField(read_only=True)

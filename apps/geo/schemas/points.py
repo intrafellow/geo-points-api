@@ -1,3 +1,4 @@
+from django.contrib.gis.geos import Point as GeoPoint
 from rest_framework import serializers
 
 from apps.geo.models.point import Point
@@ -7,6 +8,22 @@ class PointCreateSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=255)
     latitude = serializers.FloatField(min_value=-90.0, max_value=90.0)
     longitude = serializers.FloatField(min_value=-180.0, max_value=180.0)
+
+    def validate_title(self, value: str | None) -> str | None:
+        if value is None:
+            return None
+        stripped = value.strip()
+        return stripped or None
+
+    def create(self, validated_data: dict) -> Point:
+        title = validated_data.get("title")
+        latitude = validated_data["latitude"]
+        longitude = validated_data["longitude"]
+        location = GeoPoint(longitude, latitude, srid=4326)
+        return Point.objects.create(title=title, location=location)
+
+    def to_representation(self, instance: Point) -> dict:
+        return PointResponseSerializer(instance).data
 
 
 class PointResponseSerializer(serializers.ModelSerializer):
