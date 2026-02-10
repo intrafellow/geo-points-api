@@ -8,15 +8,22 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
+from apps.geo.filters import RadiusSearchFilterBackend
+from apps.geo.mixins import PaginatedListMixin
 from apps.geo.models.point import Point
 from apps.geo.schemas.messages import MessageCreateSerializer, MessageResponseSerializer
-from apps.geo.schemas.search import RadiusSearchQuerySerializer
 
 logger = logging.getLogger("apps.geo")
 
 
-class MessagesViewSet(mixins.CreateModelMixin, GenericViewSet):
+class MessagesViewSet(PaginatedListMixin, mixins.CreateModelMixin, GenericViewSet):
     serializer_class = MessageCreateSerializer
+    filter_backends = [RadiusSearchFilterBackend]
+
+    def get_queryset(self):
+        from apps.geo.models.message import Message
+
+        return Message.objects.all()
 
     @extend_schema(
         tags=["points"],
@@ -24,12 +31,23 @@ class MessagesViewSet(mixins.CreateModelMixin, GenericViewSet):
         responses={201: MessageResponseSerializer},
         summary="Создание сообщения к точке",
     )
-    def perform_create(self, serializer: MessageCreateSerializer) -> None:
+    def create(self, request: Request, *args, **kwargs) -> Response:
+        request_serializer = self.get_serializer(data=request.data)
+        request_serializer.is_valid(raise_exception=True)
+        created_message = self.perform_create(request_serializer)
+        response_data = MessageResponseSerializer(created_message).data
+        return Response(data=response_data, status=201)
+
+    def perform_create(self, serializer: MessageCreateSerializer):
         point_id = serializer.validated_data["point_id"]
         point = Point.objects.only("id").filter(id=point_id).first()
         if point is None:
             raise NotFound(f"Point with id={point_id} not found")
-        created_message = serializer.save(point=point, author=self.request.user)
+        from apps.geo.models.message import Message
+
+        created_message = Message.objects.create(
+            point=point, author=self.request.user, text=serializer.validated_data["text"]
+        )
         logger.info(
             "message_created id=%s point_id=%s author_id=%s text_len=%s",
             created_message.id,
@@ -37,6 +55,7 @@ class MessagesViewSet(mixins.CreateModelMixin, GenericViewSet):
             getattr(self.request.user, "id", None),
             len(created_message.text),
         )
+        return created_message
 
     @extend_schema(
         tags=["points"],
@@ -72,26 +91,14 @@ class MessagesViewSet(mixins.CreateModelMixin, GenericViewSet):
     )
     @action(detail=False, methods=["get"], url_path="search")
     def search(self, request: Request, *args, **kwargs) -> Response:
-        request_serializer = RadiusSearchQuerySerializer(data=request.query_params)
-        request_serializer.is_valid(raise_exception=True)
+        queryset = self.filter_queryset(self.get_queryset())
+        params = getattr(request, "radius_search_params", None)
+        if params:
+            logger.info(
+                "messages_search lat=%s lon=%s radius_km=%s",
+                params["latitude"],
+                params["longitude"],
+                params["radius"],
+            )
 
-        params = request_serializer.validated_data
-        logger.info(
-            "messages_search lat=%s lon=%s radius_km=%s",
-            params["latitude"],
-            params["longitude"],
-            params["radius"],
-        )
-        from apps.geo.models.message import Message
-
-        queryset = Message.objects.all().within_radius(
-            latitude=params["latitude"],
-            longitude=params["longitude"],
-            radius_km=params["radius"],
-        )
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = MessageResponseSerializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-        serializer = MessageResponseSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return self.respond_paginated(queryset, MessageResponseSerializer)
