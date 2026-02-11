@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class TestUserCreateSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
     username = serializers.CharField(min_length=1, max_length=150)
     password = serializers.CharField(
         min_length=8,
@@ -24,6 +25,12 @@ class TestUserCreateSerializer(serializers.Serializer):
                 {"username": ["Пользователь с таким username уже существует."]}
             )
         return attrs
+
+    def create(self, validated_data: dict):
+        return User.objects.create_user(
+            username=validated_data["username"],
+            password=validated_data["password"],
+        )
 
 
 class TestUserResponseSerializer(serializers.Serializer):

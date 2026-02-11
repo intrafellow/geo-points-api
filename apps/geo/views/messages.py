@@ -1,41 +1,45 @@
 import logging
 
-from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema, inline_serializer
-from rest_framework import mixins, serializers
+from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema
+from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from apps.geo.filters import RadiusSearchFilterBackend
-from apps.geo.mixins import PaginatedListMixin
+from apps.geo.filters import MessagesRadiusSearchFilterSet
+from apps.geo.models.message import Message
 from apps.geo.models.point import Point
-from apps.geo.schemas.messages import MessageCreateSerializer, MessageResponseSerializer
+from apps.geo.schemas.messages import MessageCreateSerializer, MessageSerializer
 
 logger = logging.getLogger("apps.geo")
 
 
-class MessagesViewSet(PaginatedListMixin, mixins.CreateModelMixin, GenericViewSet):
-    serializer_class = MessageCreateSerializer
-    filter_backends = [RadiusSearchFilterBackend]
+class MessagesViewSet(mixins.CreateModelMixin, GenericViewSet):
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MessagesRadiusSearchFilterSet
+
+    def get_serializer_class(self):
+        if self.action == "search":
+            return MessageSerializer
+        return MessageCreateSerializer
 
     def get_queryset(self):
-        from apps.geo.models.message import Message
-
         return Message.objects.all()
 
     @extend_schema(
         tags=["points"],
         request=MessageCreateSerializer,
-        responses={201: MessageResponseSerializer},
+        responses={201: MessageSerializer},
         summary="Создание сообщения к точке",
     )
     def create(self, request: Request, *args, **kwargs) -> Response:
         request_serializer = self.get_serializer(data=request.data)
         request_serializer.is_valid(raise_exception=True)
         created_message = self.perform_create(request_serializer)
-        response_data = MessageResponseSerializer(created_message).data
+        response_data = MessageSerializer(created_message).data
         return Response(data=response_data, status=201)
 
     def perform_create(self, serializer: MessageCreateSerializer):
@@ -43,8 +47,6 @@ class MessagesViewSet(PaginatedListMixin, mixins.CreateModelMixin, GenericViewSe
         point = Point.objects.only("id").filter(id=point_id).first()
         if point is None:
             raise NotFound(f"Point with id={point_id} not found")
-        from apps.geo.models.message import Message
-
         created_message = Message.objects.create(
             point=point, author=self.request.user, text=serializer.validated_data["text"]
         )
@@ -59,46 +61,16 @@ class MessagesViewSet(PaginatedListMixin, mixins.CreateModelMixin, GenericViewSe
 
     @extend_schema(
         tags=["points"],
-        parameters=[
-            OpenApiParameter(
-                "latitude", OpenApiTypes.FLOAT, location=OpenApiParameter.QUERY, required=True
-            ),
-            OpenApiParameter(
-                "longitude", OpenApiTypes.FLOAT, location=OpenApiParameter.QUERY, required=True
-            ),
-            OpenApiParameter(
-                "radius", OpenApiTypes.FLOAT, location=OpenApiParameter.QUERY, required=True
-            ),
-            OpenApiParameter(
-                "page", OpenApiTypes.INT, location=OpenApiParameter.QUERY, required=False
-            ),
-            OpenApiParameter(
-                "page_size", OpenApiTypes.INT, location=OpenApiParameter.QUERY, required=False
-            ),
-        ],
-        responses={
-            200: inline_serializer(
-                name="PaginatedMessageResponse",
-                fields={
-                    "count": serializers.IntegerField(),
-                    "next": serializers.URLField(allow_null=True),
-                    "previous": serializers.URLField(allow_null=True),
-                    "results": MessageResponseSerializer(many=True),
-                },
-            )
-        },
         summary="Поиск сообщений в радиусе",
+        filters=True,
     )
     @action(detail=False, methods=["get"], url_path="search")
     def search(self, request: Request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
-        params = getattr(request, "radius_search_params", None)
-        if params:
-            logger.info(
-                "messages_search lat=%s lon=%s radius_km=%s",
-                params["latitude"],
-                params["longitude"],
-                params["radius"],
-            )
 
-        return self.respond_paginated(queryset, MessageResponseSerializer)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

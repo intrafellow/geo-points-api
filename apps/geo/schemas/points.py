@@ -1,5 +1,8 @@
 from rest_framework import serializers
 
+from apps.geo.models.point import Point
+
+
 class PointCreateSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, allow_null=True, max_length=255)
     latitude = serializers.FloatField(min_value=-90.0, max_value=90.0)
@@ -12,10 +15,7 @@ class PointCreateSerializer(serializers.Serializer):
         return stripped or None
 
 
-from apps.geo.models.point import Point
-
-
-class PointResponseSerializer(serializers.ModelSerializer):
+class PointSerializer(serializers.ModelSerializer):
     latitude = serializers.FloatField(read_only=True)
     longitude = serializers.FloatField(read_only=True)
 
